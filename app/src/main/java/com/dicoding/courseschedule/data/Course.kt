@@ -1,12 +1,37 @@
 package com.dicoding.courseschedule.data
 
+import android.os.Parcelable
+import androidx.annotation.NonNull
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
+
 //TODO 1 : Define a local database table using the schema in app/schema/course.json
+@Entity(tableName = "course")
+@Parcelize
 data class Course(
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "id")
     val id: Int = 0,
+
+    @ColumnInfo(name = "courseName")
     val courseName: String,
+
+    @ColumnInfo(name = "day")
     val day: Int,
+
+    @ColumnInfo(name = "startTime")
     val startTime: String,
+
+    @ColumnInfo(name = "endTime")
     val endTime: String,
+
+    @ColumnInfo(name = "lecturer")
     val lecturer: String,
+
+    @ColumnInfo(name = "note")
     val note: String
-)
+
+    ): Parcelable
