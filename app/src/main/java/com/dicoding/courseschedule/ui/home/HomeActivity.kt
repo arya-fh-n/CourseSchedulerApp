@@ -7,8 +7,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.dicoding.courseschedule.R
 import com.dicoding.courseschedule.data.Course
+import com.dicoding.courseschedule.data.DataRepository
+import com.dicoding.courseschedule.ui.add.AddCourseActivity
+import com.dicoding.courseschedule.ui.list.ListActivity
 import com.dicoding.courseschedule.ui.setting.SettingsActivity
 import com.dicoding.courseschedule.util.DayName
 import com.dicoding.courseschedule.util.QueryType
@@ -26,6 +31,11 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         supportActionBar?.title = resources.getString(R.string.today_schedule)
 
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(HomeViewModel::class.java)
+        viewModel.apply {
+            val course = DataRepository.getInstance(applicationContext)?.getTodaySchedule()?.first()
+            showTodaySchedule(course)
+        }
     }
 
     private fun showTodaySchedule(course: Course?) {
@@ -34,9 +44,16 @@ class HomeActivity : AppCompatActivity() {
             val dayName = DayName.getByNumber(day)
             val time = String.format(getString(R.string.time_format), dayName, startTime, endTime)
             val remainingTime = timeDifference(day, startTime)
+            val courseName = courseName
+            val lecturer = lecturer
+            val note = note
 
             val cardHome = findViewById<CardHomeView>(R.id.view_home)
-
+            cardHome.findViewById<TextView>(R.id.tv_course_home).text = courseName
+            cardHome.findViewById<TextView>(R.id.tv_time_home).text = time
+            cardHome.findViewById<TextView>(R.id.tv_remaining_time).text = remainingTime
+            cardHome.findViewById<TextView>(R.id.tv_lecturer_home).text = lecturer
+            cardHome.findViewById<TextView>(R.id.tv_note_home).text = note
         }
 
         findViewById<TextView>(R.id.tv_empty_home).visibility =
@@ -64,6 +81,8 @@ class HomeActivity : AppCompatActivity() {
         val intent: Intent = when (item.itemId) {
 
             R.id.action_settings -> Intent(this, SettingsActivity::class.java)
+            R.id.action_add -> Intent(this, AddCourseActivity::class.java)
+            R.id.action_list -> Intent(this, ListActivity::class.java)
             else -> null
         } ?: return super.onOptionsItemSelected(item)
 
