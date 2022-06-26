@@ -1,8 +1,6 @@
 package com.dicoding.courseschedule.ui.setting
 
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
@@ -23,19 +21,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         //TODO 10 : Update theme based on value in ListPreference
         //TODO 11 : Schedule and cancel notification in DailyReminder based on SwitchPreference
         init()
-        notificationPreference.setOnPreferenceChangeListener { preference, newValue ->
+        notificationPreference.setOnPreferenceChangeListener { _, newValue ->
             val dailyReminder = DailyReminder()
             if (newValue == true) {
                 dailyReminder.setDailyReminder(requireContext())
             } else if (newValue == false) {
                 dailyReminder.cancelAlarm(requireContext())
-            } else {
-                Log.e("Notification Settings:", newValue.toString())
             }
             true
         }
 
-        themePreference.setOnPreferenceChangeListener { preference, newValue ->
+        themePreference.setOnPreferenceChangeListener { _, newValue ->
             when (newValue.toString()) {
                 "on" -> {
                     updateTheme(MODE_NIGHT_YES)
