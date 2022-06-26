@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.dicoding.courseschedule.R
 import com.dicoding.courseschedule.data.Course
 import com.dicoding.courseschedule.data.DataRepository
@@ -18,6 +17,10 @@ import com.dicoding.courseschedule.ui.setting.SettingsActivity
 import com.dicoding.courseschedule.util.DayName
 import com.dicoding.courseschedule.util.QueryType
 import com.dicoding.courseschedule.util.timeDifference
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 //TODO 15 : Write UI test to validate when user tap Add Course (+) Menu, the AddCourseActivity is displayed
 class HomeActivity : AppCompatActivity() {
@@ -31,10 +34,14 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         supportActionBar?.title = resources.getString(R.string.today_schedule)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(HomeViewModel::class.java)
-        viewModel.apply {
-            val course = DataRepository.getInstance(applicationContext)?.getTodaySchedule()?.first()
-            showTodaySchedule(course)
+        val factory = HomeViewModelFactory.createFactory(this)
+        viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val course = DataRepository.getInstance(this@HomeActivity)?.getTodaySchedule()
+            withContext(Dispatchers.Main) {
+                showTodaySchedule(course?.firstOrNull())
+            }
         }
     }
 
@@ -44,16 +51,15 @@ class HomeActivity : AppCompatActivity() {
             val dayName = DayName.getByNumber(day)
             val time = String.format(getString(R.string.time_format), dayName, startTime, endTime)
             val remainingTime = timeDifference(day, startTime)
-            val courseName = courseName
-            val lecturer = lecturer
-            val note = note
 
             val cardHome = findViewById<CardHomeView>(R.id.view_home)
-            cardHome.findViewById<TextView>(R.id.tv_course_home).text = courseName
-            cardHome.findViewById<TextView>(R.id.tv_time_home).text = time
-            cardHome.findViewById<TextView>(R.id.tv_remaining_time).text = remainingTime
-            cardHome.findViewById<TextView>(R.id.tv_lecturer_home).text = lecturer
-            cardHome.findViewById<TextView>(R.id.tv_note_home).text = note
+            cardHome.apply {
+                setCourseName(courseName)
+                setTime(time)
+                setRemainingTime(remainingTime)
+                setLecturer(lecturer)
+                setNote(note)
+            }
         }
 
         findViewById<TextView>(R.id.tv_empty_home).visibility =

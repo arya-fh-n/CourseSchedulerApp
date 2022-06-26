@@ -3,13 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/activity_add_course.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/activity_add_course.xml" value="0.33" />
         <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/activity_detail.xml" value="0.33" />
         <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/activity_home.xml" value="0.25" />
+        <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/activity_list.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/card_home_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/content_list.xml" value="0.203125" />
         <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/item_course.xml" value="0.1" />
+        <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/layout/settings_activity.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/menu/menu_add.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/menu/menu_home.xml" value="0.67" />
+        <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/menu/menu_list.xml" value="0.25" />
+        <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/menu/sort_course.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/AryaFikri/AndroidStudioProjects/CourseScheduleApp/app/src/main/res/xml/root_preferences.xml" value="0.1" />
       </map>
     </option>
   </component>

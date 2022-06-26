@@ -18,7 +18,7 @@ interface CourseDao {
     @Query("SELECT * FROM course WHERE id = :id LIMIT 1")
     fun getCourse(id: Int): LiveData<Course>
 
-    @Query("SELECT * FROM course WHERE day = :day")
+    @Query("SELECT * FROM course WHERE day = :day ORDER BY startTime ASC")
     fun getTodaySchedule(day: Int): List<Course>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -27,5 +27,6 @@ interface CourseDao {
     @Delete
     fun delete(course: Course)
 
+    @Query("SELECT * FROM course ORDER BY :params ASC")
     fun sort(params: String): DataSource.Factory<Int, Course>
 }
